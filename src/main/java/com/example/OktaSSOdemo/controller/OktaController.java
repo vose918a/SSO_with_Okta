@@ -15,6 +15,6 @@ public class OktaController {
 
     @GetMapping("/protected")
     public ResponseEntity<?> getPrincipal(@AuthenticationPrincipal Jwt user){
-        return ResponseEntity.ok("token: " + user);
+        return ResponseEntity.ok(user.getClaims());
     }
 }
