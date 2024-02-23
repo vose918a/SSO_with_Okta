@@ -43,9 +43,9 @@ public class TaskController {
     }
 
     @PutMapping("/pendingTask/{taskId}")
-    public ResponseEntity<Task> penndingTask(@AuthenticationPrincipal Jwt jwt,
+    public ResponseEntity<Task> pendingTask(@AuthenticationPrincipal Jwt jwt,
                                            @PathVariable String taskId) throws Exception{
-        Task updated = taskService.penndingTask(ownerId(jwt),taskId);
+        Task updated = taskService.pendingTask(ownerId(jwt),taskId);
         return updated != null ?
                 ResponseEntity.ok(updated) :
                 ResponseEntity.notFound().build();
@@ -67,5 +67,12 @@ public class TaskController {
         return List != null ?
                 ResponseEntity.ok(List) :
                 ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/deleteTask/{taskId}")
+    public ResponseEntity<?> deleteTask(@AuthenticationPrincipal Jwt jwt,
+                                        @PathVariable String taskId) throws Exception{
+        return taskService.deleteTask(ownerId(jwt),taskId) ?
+                ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }
 }

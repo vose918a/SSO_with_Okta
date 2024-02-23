@@ -18,6 +18,15 @@ public class TaskService {
     @Autowired
     private final TaskRepository taskRepository;
 
+    private Task getTaskFromList (List<Task> tasks, UUID taskId) throws Exception {
+        for (Task task : tasks) {
+            if (task.getId().equals(taskId)) {
+                return task;
+            } else {throw new Exception("not found");}
+        }
+        return null;
+    }
+
     public List<Task> getTasks(String userId) throws Exception{
         try {
             return taskRepository.getTasksByOwnerId(userId);
@@ -54,7 +63,7 @@ public class TaskService {
         return null;
     }
 
-    public Task penndingTask(String ownerId, String taskId) throws Exception {
+    public Task pendingTask(String ownerId, String taskId) throws Exception {
         try {
             List<Task> tasks = taskRepository.getTasksByOwnerId(ownerId);
             Task oldTask = getTaskFromList(tasks,UUID.fromString(taskId));
@@ -82,12 +91,13 @@ public class TaskService {
         return null;
     }
 
-    private Task getTaskFromList (List<Task> tasks, UUID taskId) throws Exception {
-        for (Task task : tasks) {
-            if (task.getId().equals(taskId)) {
-                return task;
-            } else {throw new Exception("not found");}
+    public boolean deleteTask(String ownerId, String taskId) throws Exception{
+        List<Task> tasks = taskRepository.getTasksByOwnerId(ownerId);
+        if(getTaskFromList(tasks,UUID.fromString(taskId)) != null){
+            taskRepository.deleteById(UUID.fromString(taskId));
+            return true;
+        }else{
+            throw new Exception("Task with this Id non exist");
         }
-        return null;
     }
 }
