@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/okta")
 @CrossOrigin("*")
 public class OktaController {
-
+/**This method is for example and testing on the first touch with Okta*/
     @GetMapping("/protected")
     public ResponseEntity<?> getPrincipal(@AuthenticationPrincipal Jwt user){
         return ResponseEntity.ok(user.getClaims());

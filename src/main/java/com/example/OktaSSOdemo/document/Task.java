@@ -6,9 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
-
+/**This is the principal document model*/
 @Document(collection = "Task")
 @AllArgsConstructor @NoArgsConstructor
 @Data @ToString

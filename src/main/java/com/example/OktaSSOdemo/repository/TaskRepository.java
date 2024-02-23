@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-
+/**This is a task repository interface and extends form MongoRepository abstract class*/
 @Repository
 public interface TaskRepository extends MongoRepository<Task, UUID> {
     List<Task> getTasksByCreatedDate(LocalDate createdDate);

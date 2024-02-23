@@ -14,7 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-
+    /** Basic filter chain configuration, many configuration will be default and csrf protection deactivated
+     * way the auth method is by JWT */
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(request -> {

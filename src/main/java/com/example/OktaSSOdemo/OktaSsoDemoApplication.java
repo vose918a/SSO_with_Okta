@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.security.OAuthFlows;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+/** This security scheme annotation is for the configuration of the Swagger, now unavailable*/
 @SpringBootApplication
 @SecurityScheme(name = "okta",
 				scheme = "bearer",
@@ -21,9 +21,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 								authorizationUrl = "https://dev-60369700.okta.com/oauth2/default/v1/authorize",
 								tokenUrl = "https://dev-60369700.okta.com/oauth2/default/v1/token",
 								refreshUrl = ""
-//								scopes = {@OAuthScope(name = "openid"),
-//										  @OAuthScope(name = "profile"),
-//										  @OAuthScope(name = "email")}
 						)
 				))
 public class OktaSsoDemoApplication {
