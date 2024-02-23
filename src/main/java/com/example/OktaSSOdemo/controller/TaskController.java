@@ -4,6 +4,7 @@ import com.example.OktaSSOdemo.controller.request.TaskDTO;
 import com.example.OktaSSOdemo.document.Task;
 import com.example.OktaSSOdemo.service.TaskService;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +26,7 @@ public class TaskController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Task> createTask(@RequestBody TaskDTO task,
+    public ResponseEntity<Task> createTask(@RequestBody @NonNull TaskDTO task,
                                            @AuthenticationPrincipal Jwt jwt) throws Exception {
         Task saved = taskService.saveTask(task,ownerId(jwt));
         return saved != null ?
@@ -35,7 +36,7 @@ public class TaskController {
 
     @PutMapping("/finishTask/{taskId}")
     public ResponseEntity<Task> finishTask(@AuthenticationPrincipal Jwt jwt,
-                                           @PathVariable String taskId) throws Exception{
+                                           @PathVariable @NonNull String taskId) throws Exception{
         Task updated = taskService.finishTask(ownerId(jwt),taskId);
         return updated != null ?
                 ResponseEntity.ok(updated) :
@@ -44,7 +45,7 @@ public class TaskController {
 
     @PutMapping("/pendingTask/{taskId}")
     public ResponseEntity<Task> pendingTask(@AuthenticationPrincipal Jwt jwt,
-                                           @PathVariable String taskId) throws Exception{
+                                           @PathVariable @NonNull String taskId) throws Exception{
         Task updated = taskService.pendingTask(ownerId(jwt),taskId);
         return updated != null ?
                 ResponseEntity.ok(updated) :
@@ -54,7 +55,7 @@ public class TaskController {
     @PutMapping("/updateDescription/{taskId}")
     public ResponseEntity<Task> updateDescription(@AuthenticationPrincipal Jwt jwt,
                                                   @PathVariable String taskId,
-                                                  @RequestBody TaskDTO taskDTO) throws Exception{
+                                                  @RequestBody @NonNull TaskDTO taskDTO) throws Exception{
         Task updated = taskService.updateTaskDescription(ownerId(jwt),taskId,taskDTO);
         return updated != null ?
                 ResponseEntity.ok(updated) :
@@ -71,7 +72,7 @@ public class TaskController {
 
     @DeleteMapping("/deleteTask/{taskId}")
     public ResponseEntity<?> deleteTask(@AuthenticationPrincipal Jwt jwt,
-                                        @PathVariable String taskId) throws Exception{
+                                        @PathVariable @NonNull String taskId) throws Exception{
         return taskService.deleteTask(ownerId(jwt),taskId) ?
                 ResponseEntity.ok().build() : ResponseEntity.notFound().build();
     }

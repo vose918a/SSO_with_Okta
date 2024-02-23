@@ -5,6 +5,7 @@ import com.example.OktaSSOdemo.document.Statues;
 import com.example.OktaSSOdemo.document.Task;
 import com.example.OktaSSOdemo.repository.TaskRepository;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class TaskService {
     @Autowired
     private final TaskRepository taskRepository;
 
-    private Task getTaskFromList (List<Task> tasks, UUID taskId) throws Exception {
+    private Task getTaskFromList (@NonNull List<Task> tasks, UUID taskId) throws Exception {
         for (Task task : tasks) {
             if (task.getId().equals(taskId)) {
                 return task;
@@ -35,7 +36,7 @@ public class TaskService {
         }
     }
 
-    public Task saveTask(TaskDTO taskDTO,String ownerId) throws Exception {
+    public Task saveTask(@NonNull TaskDTO taskDTO, String ownerId) throws Exception {
         Task task = new Task();
         task.setId(UUID.randomUUID());
         task.setDescription(taskDTO.getDescription());
