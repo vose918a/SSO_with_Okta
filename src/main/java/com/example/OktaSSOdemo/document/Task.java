@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ public class Task {
     @Field
     private String description;
     @Field
-    private Date cretedDate;
+    private LocalDate createdDate;
     @Field
     private Statues status;
     @Field

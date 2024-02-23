@@ -10,6 +10,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/task")
 @AllArgsConstructor
@@ -18,13 +20,43 @@ public class TaskController {
     @Autowired
     private final TaskService taskService;
 
+    private String ownerId(Jwt jwt){
+        return jwt.getClaimAsString("uid");
+    }
+
     @PostMapping("/create")
-    public ResponseEntity<Task> createTask(@RequestBody TaskDTO task, @AuthenticationPrincipal Jwt jwt) throws Exception {
-        String owner = jwt.getClaimAsString("uid");
-        Task saved = taskService.saveTask(task,owner);
+    public ResponseEntity<Task> createTask(@RequestBody TaskDTO task,
+                                           @AuthenticationPrincipal Jwt jwt) throws Exception {
+        Task saved = taskService.saveTask(task,ownerId(jwt));
         return saved != null ?
                 ResponseEntity.ok(saved) :
                 ResponseEntity.badRequest().build();
     }
 
+    @PostMapping("/finishTask/{taskId}")
+    public ResponseEntity<Task> finishTask(@AuthenticationPrincipal Jwt jwt,
+                                           @PathVariable String taskId) throws Exception{
+        Task updated = taskService.finishTask(ownerId(jwt),taskId);
+        return updated != null ?
+                ResponseEntity.ok(updated) :
+                ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/updateDescription/{taskId}")
+    public ResponseEntity<Task> updateDescription(@AuthenticationPrincipal Jwt jwt,
+                                                  @PathVariable String taskId,
+                                                  @RequestBody TaskDTO taskDTO) throws Exception{
+        Task updated = taskService.updateTaskDescription(ownerId(jwt),taskId,taskDTO);
+        return updated != null ?
+                ResponseEntity.ok(updated) :
+                ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/getTasks")
+    public ResponseEntity<List<Task>> getTaskList(@AuthenticationPrincipal Jwt jwt) throws Exception {
+        List<Task> List = taskService.getTasks(ownerId(jwt));
+        return List != null ?
+                ResponseEntity.ok(List) :
+                ResponseEntity.notFound().build();
+    }
 }
