@@ -39,12 +39,27 @@ public class TaskService {
             throw new Exception(e.getMessage());
         }
     }
+
     public Task finishTask(String ownerId, String taskId) throws Exception {
         try {
             List<Task> tasks = taskRepository.getTasksByOwnerId(ownerId);
             Task oldTask = getTaskFromList(tasks,UUID.fromString(taskId));
             if(oldTask != null) {
                 oldTask.setStatus(Statues.FINISHED);
+                return taskRepository.save(oldTask);
+            }
+        } catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+        return null;
+    }
+
+    public Task penndingTask(String ownerId, String taskId) throws Exception {
+        try {
+            List<Task> tasks = taskRepository.getTasksByOwnerId(ownerId);
+            Task oldTask = getTaskFromList(tasks,UUID.fromString(taskId));
+            if(oldTask != null) {
+                oldTask.setStatus(Statues.PENDING);
                 return taskRepository.save(oldTask);
             }
         } catch (Exception e){

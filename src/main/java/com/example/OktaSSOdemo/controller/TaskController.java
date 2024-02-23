@@ -33,7 +33,7 @@ public class TaskController {
                 ResponseEntity.badRequest().build();
     }
 
-    @PostMapping("/finishTask/{taskId}")
+    @PutMapping("/finishTask/{taskId}")
     public ResponseEntity<Task> finishTask(@AuthenticationPrincipal Jwt jwt,
                                            @PathVariable String taskId) throws Exception{
         Task updated = taskService.finishTask(ownerId(jwt),taskId);
@@ -42,7 +42,16 @@ public class TaskController {
                 ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/updateDescription/{taskId}")
+    @PutMapping("/pendingTask/{taskId}")
+    public ResponseEntity<Task> penndingTask(@AuthenticationPrincipal Jwt jwt,
+                                           @PathVariable String taskId) throws Exception{
+        Task updated = taskService.penndingTask(ownerId(jwt),taskId);
+        return updated != null ?
+                ResponseEntity.ok(updated) :
+                ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/updateDescription/{taskId}")
     public ResponseEntity<Task> updateDescription(@AuthenticationPrincipal Jwt jwt,
                                                   @PathVariable String taskId,
                                                   @RequestBody TaskDTO taskDTO) throws Exception{
