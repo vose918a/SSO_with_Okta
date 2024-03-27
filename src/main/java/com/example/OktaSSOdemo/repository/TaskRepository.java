@@ -10,6 +10,6 @@ import java.util.UUID;
 /**This is a task repository interface and extends form MongoRepository abstract class*/
 @Repository
 public interface TaskRepository extends MongoRepository<Task, UUID> {
-    List<Task> getTasksByCreatedDate(LocalDate createdDate);
     List<Task> getTasksByOwnerId(String ownerId);
+    Task getTaskById(UUID id);
 }

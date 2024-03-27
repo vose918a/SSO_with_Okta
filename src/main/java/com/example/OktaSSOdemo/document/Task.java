@@ -10,7 +10,7 @@ import java.util.UUID;
 /**This is the principal document model*/
 @Document(collection = "Task")
 @AllArgsConstructor @NoArgsConstructor
-@Data @ToString
+@Data @ToString @Builder
 public class Task {
     @Id
     private UUID id;
